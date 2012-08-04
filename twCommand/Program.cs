@@ -13,34 +13,39 @@ namespace twitCmd
         {
             try
             {
-                if (args.Length != 0)
+                var consumer = new Consumer("Xq4JnC92AR0yoLS11VclWA", "urZb3nDEhyFDqDaK7Cjc9mRA3IVe3PtWB5STlzVI8");
+                AccessToken accesstoken = null;
+                if (!System.IO.File.Exists(tokenfile))
                 {
-                    var consumer = new Consumer("Xq4JnC92AR0yoLS11VclWA", "urZb3nDEhyFDqDaK7Cjc9mRA3IVe3PtWB5STlzVI8");
-                    AccessToken accesstoken;
-                    if (!System.IO.File.Exists(tokenfile))
-                    {
-                        var reqtoken = consumer.ObtainUnauthorizedRequestToken("https://api.twitter.com/oauth/request_token", "http://twitter.com/");
-                        System.Diagnostics.Process.Start(Consumer.BuildUserAuthorizationURL("https://api.twitter.com/oauth/authorize", reqtoken));
-                        Console.Write("PINコードを入力>");
-                        accesstoken = consumer.RequestAccessToken(Console.ReadLine(), reqtoken, "https://api.twitter.com/oauth/access_token", "http://twitter.com/");
+                    var reqtoken = consumer.ObtainUnauthorizedRequestToken("https://api.twitter.com/oauth/request_token", "http://twitter.com/");
+                    System.Diagnostics.Process.Start(Consumer.BuildUserAuthorizationURL("https://api.twitter.com/oauth/authorize", reqtoken));
+                    Console.Write("PINコードを入力>");
+                    accesstoken = consumer.RequestAccessToken(Console.ReadLine(), reqtoken, "https://api.twitter.com/oauth/access_token", "http://twitter.com/");
 
-                        using (var sw = new StreamWriter(tokenfile))
-                            new XmlSerializer(typeof(Tokens)).Serialize(sw, new Tokens() { TokenValue = accesstoken.TokenValue, TokenSecret = accesstoken.TokenSecret });
-                    }
-                    else
+                    using (var sw = new StreamWriter(tokenfile))
+                        new XmlSerializer(typeof(Tokens)).Serialize(sw, new Tokens() { TokenValue = accesstoken.TokenValue, TokenSecret = accesstoken.TokenSecret });
+                }
+                else
+                {
+                    if (args.Length != 0)
                     {
                         Tokens tokens;
                         using (var sr = new StreamReader(tokenfile))
                             tokens = new XmlSerializer(typeof(Tokens)).Deserialize(sr) as Tokens;
                         accesstoken = new AccessToken(tokens.TokenValue, tokens.TokenSecret);
                     }
-
-                    System.Net.HttpWebResponse resp = consumer.AccessProtectedResource(accesstoken, "https://api.twitter.com/1/statuses/update.json", "POST", "http://twitter.com/",
-                            new Parameter[] { new Parameter("status", args[0]) });
+                    else
+                    {
+                        Console.WriteLine("ツイート内容を指定してください");
+                        return;
+                    }
                 }
-                else
+
+                System.Net.HttpWebResponse resp = consumer.AccessProtectedResource(accesstoken, "https://api.twitter.com/1/statuses/update.json", "POST", "http://twitter.com/",
+                        new Parameter[] { new Parameter("status", args[0]) });
+                if (resp.StatusCode.ToString()[0] != '2')
                 {
-                    Console.WriteLine("ツイート内容を指定してください");
+                    Console.WriteLine("失敗しました");
                 }
             }
             catch (Exception ex)
