@@ -3,7 +3,7 @@ using System.IO;
 using System.Xml.Serialization;
 using OAuthLib;
 
-namespace twitCmd
+namespace twCommand
 {
     class Program
     {
