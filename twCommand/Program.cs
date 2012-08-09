@@ -43,7 +43,7 @@ namespace twitCmd
 
                 System.Net.HttpWebResponse resp = consumer.AccessProtectedResource(accesstoken, "https://api.twitter.com/1/statuses/update.json", "POST", "http://twitter.com/",
                         new Parameter[] { new Parameter("status", args[0]) });
-                if (resp.StatusCode.ToString()[0] != '2')
+                if (((int)resp.StatusCode).ToString()[0] != '2')
                 {
                     Console.WriteLine("失敗しました");
                 }
