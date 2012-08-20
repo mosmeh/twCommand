@@ -47,5 +47,13 @@ namespace twCommand.Utils
 
             return accesstoken;
         }
+
+        public static AccessToken AccessToken
+        {
+            get
+            {
+                return accesstoken;
+            }
+        }
     }
 }
