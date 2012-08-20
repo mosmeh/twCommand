@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 // アセンブリに関する一般情報は以下の属性セットをとおして制御されます。
 // アセンブリに関連付けられている情報を変更するには、
 // これらの属性値を変更してください。
-[assembly: AssemblyTitle("twCommand.Tweet")]
+[assembly: AssemblyTitle("twCommand.R4S")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("yut831")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // 次の GUID は、このプロジェクトが COM に公開される場合の、typelib の ID です
-[assembly: Guid("6dfa6459-af51-4393-aca3-290c55ec0ebe")]
+[assembly: Guid("592dcbb6-8d10-4968-8227-f3b2774fdde5")]
 
 // アセンブリのバージョン情報は、以下の 4 つの値で構成されています:
 //
