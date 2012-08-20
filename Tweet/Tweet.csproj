@@ -39,7 +39,6 @@
       <HintPath>..\lib\OAuthLib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.XML" />
     <Reference Include="twCommandUtils">
       <HintPath>..\twCommandUtils\bin\Release\twCommandUtils.dll</HintPath>
     </Reference>
